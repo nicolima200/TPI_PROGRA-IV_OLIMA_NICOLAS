@@ -1,3 +1,4 @@
+from pydantic import field_validator
 from sqlmodel import Field, SQLModel
 
 from app.modules.categorias.schemas import CategoriaRead
@@ -21,6 +22,13 @@ class ProductoUpdate(SQLModel):
     stock: int | None = Field(default=None, ge=0)
     disponible: bool | None = None
     categoria_id: int | None = None
+
+    @field_validator("nombre", "precio_base", "stock", "disponible", "categoria_id")
+    @classmethod
+    def no_nulo(cls, valor: object) -> object:
+        if valor is None:
+            raise ValueError("El campo no puede ser nulo")
+        return valor
 
 
 class ProductoStockUpdate(SQLModel):
