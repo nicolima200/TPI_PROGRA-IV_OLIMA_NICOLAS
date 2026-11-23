@@ -23,11 +23,8 @@ export const useAuthStore = create<AuthState>()(
         set({ usuario: data })
       },
       logout: async () => {
-        try {
-          await axiosInstance.post('/auth/logout')
-        } finally {
-          set({ usuario: null })
-        }
+        await axiosInstance.post('/auth/logout').catch(() => undefined)
+        set({ usuario: null })
       },
       checkSession: async () => {
         set({ cargando: true })
