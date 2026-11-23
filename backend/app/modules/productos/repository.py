@@ -35,3 +35,8 @@ class ProductoRepository(BaseRepository[Producto]):
             select(Producto).where(*filtros).order_by(Producto.id).offset(skip).limit(limit)
         ).all()
         return total, list(items)
+
+    def get_by_nombre(self, nombre: str, categoria_id: int) -> Producto | None:
+        return self.session.exec(
+            select(Producto).where(Producto.nombre == nombre, Producto.categoria_id == categoria_id)
+        ).first()
