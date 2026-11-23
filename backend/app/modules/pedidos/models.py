@@ -27,7 +27,7 @@ class Pedido(SQLModel, table=True):
     )
 
     usuario: "Usuario" = Relationship(back_populates="pedidos")
-    detalles: list["DetallePedido"] = Relationship(back_populates="pedido", cascade_delete=True)
+    items: list["DetallePedido"] = Relationship(back_populates="pedido", cascade_delete=True)
 
 
 class DetallePedido(SQLModel, table=True):
@@ -39,5 +39,5 @@ class DetallePedido(SQLModel, table=True):
     precio_unitario: float
     subtotal: float
 
-    pedido: Pedido = Relationship(back_populates="detalles")
+    pedido: Pedido = Relationship(back_populates="items")
     producto: "Producto" = Relationship(back_populates="detalles")
