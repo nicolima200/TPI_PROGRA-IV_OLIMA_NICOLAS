@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware'
 export interface ItemCarrito {
   producto_id: number
   nombre: string
-  precio: number
+  precio_unitario: number
   imagen_url: string | null
   stock: number
   cantidad: number
@@ -18,11 +18,13 @@ interface CartState {
   cambiarCantidad: (productoId: number, cantidad: number) => void
   quitar: (productoId: number) => void
   vaciar: () => void
+  total: () => number
+  unidades: () => number
 }
 
 export const useCartStore = create<CartState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       items: [],
       agregar: (producto, cantidad = 1) =>
         set((state) => {
@@ -53,6 +55,8 @@ export const useCartStore = create<CartState>()(
       quitar: (productoId) =>
         set((state) => ({ items: state.items.filter((i) => i.producto_id !== productoId) })),
       vaciar: () => set({ items: [] }),
+      total: () => get().items.reduce((acc, i) => acc + i.precio_unitario * i.cantidad, 0),
+      unidades: () => get().items.reduce((acc, i) => acc + i.cantidad, 0),
     }),
     {
       name: 'food-store-cart',
@@ -60,9 +64,3 @@ export const useCartStore = create<CartState>()(
     },
   ),
 )
-
-export const calcularTotal = (items: ItemCarrito[]): number =>
-  items.reduce((acc, i) => acc + i.precio * i.cantidad, 0)
-
-export const contarUnidades = (items: ItemCarrito[]): number =>
-  items.reduce((acc, i) => acc + i.cantidad, 0)
