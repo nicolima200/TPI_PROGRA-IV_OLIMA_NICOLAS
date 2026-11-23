@@ -9,3 +9,10 @@ export interface Usuario {
   disabled: boolean
   created_at: string
 }
+
+export interface UsuarioCreate {
+  username: string
+  full_name: string
+  email: string
+  password: string
+}

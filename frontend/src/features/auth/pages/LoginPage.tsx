@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from '@tanstack/react-form'
 import { useAuthStore } from '../../../store/authStore'
 import { handleApiError } from '../../../shared/api/handleApiError'
@@ -10,6 +10,8 @@ import { Button } from '../../../shared/ui/Button'
 export function LoginPage() {
   const login = useAuthStore((s) => s.login)
   const navigate = useNavigate()
+  const location = useLocation()
+  const recienRegistrado = (location.state as { registrado?: boolean } | null)?.registrado === true
   const [errorServidor, setErrorServidor] = useState<string | null>(null)
 
   const form = useForm({
@@ -29,6 +31,11 @@ export function LoginPage() {
     <div className="mx-auto mt-10 max-w-md">
       <Card>
         <h1 className="mb-6 text-2xl font-bold">Ingresar</h1>
+        {recienRegistrado && (
+          <p role="status" className="mb-4 rounded bg-green-50 px-3 py-2 text-sm text-green-700">
+            Cuenta creada. Ya podés ingresar.
+          </p>
+        )}
         <form
           className="flex flex-col gap-4"
           noValidate
