@@ -1,4 +1,5 @@
 import axios, { type AxiosError } from 'axios'
+import { useAuthStore } from '../stores/authStore'
 
 type DetalleValidacion = { loc: (string | number)[]; msg: string }
 type ErrorFastAPI = { detail?: string | DetalleValidacion[] }
@@ -30,6 +31,10 @@ export const api = axios.create({
 
 api.interceptors.response.use(
   (response) => response,
-  (error: AxiosError<ErrorFastAPI>) =>
-    Promise.reject(new ApiError(error.response?.status ?? 0, extraerMensaje(error))),
+  (error: AxiosError<ErrorFastAPI>) => {
+    if (error.response?.status === 401) {
+      useAuthStore.getState().clearUser()
+    }
+    return Promise.reject(new ApiError(error.response?.status ?? 0, extraerMensaje(error)))
+  },
 )
