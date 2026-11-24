@@ -1,10 +1,5 @@
 import { useMemo, useState } from 'react'
-import {
-  createColumnHelper,
-  getCoreRowModel,
-  getPaginationRowModel,
-  useReactTable,
-} from '@tanstack/react-table'
+import { createColumnHelper } from '@tanstack/react-table'
 import { useProductos } from '../hooks/useProductos'
 import { useEliminarProducto } from '../hooks/useEliminarProducto'
 import { ProductoForm } from '../components/ProductoForm'
@@ -13,6 +8,7 @@ import { MiniaturaProducto } from '../components/MiniaturaProducto'
 import { handleApiError } from '../../../shared/api/handleApiError'
 import { formatearPrecio } from '../../../shared/utils/formatearPrecio'
 import { TablaDatos } from '../../../shared/components/TablaDatos'
+import { useTablaPaginada } from '../../../shared/hooks/useTablaPaginada'
 import { Skeleton } from '../../../shared/components/Skeleton'
 import { EstadoVacio } from '../../../shared/components/EstadoVacio'
 import { EstadoError } from '../../../shared/components/EstadoError'
@@ -86,13 +82,7 @@ export function AdminProductosPage() {
     [],
   )
 
-  const tabla = useReactTable({
-    data: data?.items ?? SIN_PRODUCTOS,
-    columns: columnas,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    initialState: { pagination: { pageSize: 10 } },
-  })
+  const tabla = useTablaPaginada(data?.items ?? SIN_PRODUCTOS, columnas)
 
   const abrirCrear = () => {
     setProductoEditando(null)

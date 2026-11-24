@@ -1,15 +1,11 @@
 import { useMemo, useState } from 'react'
-import {
-  createColumnHelper,
-  getCoreRowModel,
-  getPaginationRowModel,
-  useReactTable,
-} from '@tanstack/react-table'
+import { createColumnHelper } from '@tanstack/react-table'
 import { useCategorias } from '../hooks/useCategorias'
 import { useEliminarCategoria } from '../hooks/useEliminarCategoria'
 import { CategoriaForm } from '../components/CategoriaForm'
 import { handleApiError } from '../../../shared/api/handleApiError'
 import { TablaDatos } from '../../../shared/components/TablaDatos'
+import { useTablaPaginada } from '../../../shared/hooks/useTablaPaginada'
 import { Skeleton } from '../../../shared/components/Skeleton'
 import { EstadoVacio } from '../../../shared/components/EstadoVacio'
 import { EstadoError } from '../../../shared/components/EstadoError'
@@ -58,13 +54,7 @@ export function AdminCategoriasPage() {
     [],
   )
 
-  const tabla = useReactTable({
-    data: data ?? SIN_CATEGORIAS,
-    columns: columnas,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    initialState: { pagination: { pageSize: 10 } },
-  })
+  const tabla = useTablaPaginada(data ?? SIN_CATEGORIAS, columnas)
 
   const abrirCrear = () => {
     setCategoriaEditando(null)

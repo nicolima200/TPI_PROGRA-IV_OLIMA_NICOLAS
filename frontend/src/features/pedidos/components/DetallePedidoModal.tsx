@@ -16,9 +16,10 @@ const ETIQUETAS_FORMA_PAGO: Record<FormaPago, string> = {
 interface DetallePedidoModalProps {
   pedido: Pedido | null
   onCerrar: () => void
+  permitirCancelar?: boolean
 }
 
-export function DetallePedidoModal({ pedido, onCerrar }: DetallePedidoModalProps) {
+export function DetallePedidoModal({ pedido, onCerrar, permitirCancelar = true }: DetallePedidoModalProps) {
   const cancelar = useCancelarPedido()
   const [confirmando, setConfirmando] = useState(false)
 
@@ -86,7 +87,7 @@ export function DetallePedidoModal({ pedido, onCerrar }: DetallePedidoModalProps
           </p>
         )}
 
-        {pedido.estado === 'PENDIENTE' && (
+        {permitirCancelar && pedido.estado === 'PENDIENTE' && (
           <div className="flex justify-end gap-3 border-t border-gray-200 pt-4">
             {confirmando ? (
               <>

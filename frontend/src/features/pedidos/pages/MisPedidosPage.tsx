@@ -10,20 +10,10 @@ import { EstadoError } from '../../../shared/components/EstadoError'
 import { Paginacion } from '../../../shared/components/Paginacion'
 import { BadgeEstado } from '../../../shared/ui/BadgeEstado'
 import { Button } from '../../../shared/ui/Button'
+import { OPCIONES_ESTADO, esEstadoPedido } from '../utils/estados'
 import type { EstadoPedido } from '../types/pedido'
 
 const LIMIT = 10
-
-const OPCIONES_ESTADO: { valor: EstadoPedido; etiqueta: string }[] = [
-  { valor: 'PENDIENTE', etiqueta: 'Pendientes' },
-  { valor: 'EN_PREPARACION', etiqueta: 'En preparación' },
-  { valor: 'ENTREGADO', etiqueta: 'Entregados' },
-  { valor: 'CANCELADO', etiqueta: 'Cancelados' },
-]
-
-function esEstadoPedido(valor: string): valor is EstadoPedido {
-  return OPCIONES_ESTADO.some((o) => o.valor === valor)
-}
 
 export function MisPedidosPage() {
   const location = useLocation()
