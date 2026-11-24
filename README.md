@@ -4,8 +4,8 @@ Sistema de pedidos de comida: los clientes navegan el catálogo, arman un carrit
 
 **Alumno:** Nicolás Olima — Tecnicatura Universitaria en Programación a Distancia (UTN)
 
-**Repositorio:** https://github.com/nicolima200/TPI_PROGRA-IV_OLIMA_NICOLAS
-**Video de presentación:** _link_al_video_
+**Repositorio:** https://github.com/nicolima200/TPI_PROGRA-IV_OLIMA_NICOLAS<br>
+**Video de presentación:** [_link_al_video_](https://youtu.be/dBWomqw1Ilk)
 
 ---
 
